@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MovieTrailer.Views.LogIn.LogIn"
+             xmlns:converters="clr-namespace:MovieTrailer.Converters"
+             xmlns:behaviors="clr-namespace:MovieTrailer.Behaviour"
+             NavigationPage.HasBackButton="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ValidationErrorConverter x:Key="ValidationErrorConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+
+        <ScrollView>
+            <StackLayout Margin="0"  BackgroundColor="White">
+                <!--top image-->
+                <StackLayout Margin="0" Orientation="Vertical">
+                    <Image Source="tipubanner.png"  Aspect="Fill" HeightRequest="260" HorizontalOptions="Center"></Image>
+                </StackLayout>
+                <Frame BackgroundColor="#f8f9fa" CornerRadius="16" Margin="20,-50,20,20" Padding="0,0,0,20">
+                    <StackLayout Margin="0,0,0,0"   Orientation="Vertical"  >
+                        <!--Curved stack-->
+                        <StackLayout BackgroundColor="Transparent" Margin="0,0,0,0" Padding="0" Orientation="Horizontal" Grid.Row="1" Grid.Column="2">
+                            <ImageButton BackgroundColor="Transparent" Margin="0" Source="loginactive.png" HorizontalOptions="Start" Grid.Column="1" 
+                                         Grid.Row="1"  WidthRequest="200" IsVisible="{Binding IsButtonVisible}" Command="{Binding LogInClicked}"/>
+                            <ImageButton BackgroundColor="Transparent" Margin="0"  Source="signpbtn.png" HorizontalOptions="Start"
+                                         WidthRequest="200" Grid.Column="2" Grid.Row="1"  IsVisible="{Binding IsButtonVisible}" Command="{Binding SignUpClicked}" />
+                        </StackLayout>
+
+                        <StackLayout Margin="0,-5,0,0" BackgroundColor="#f8f9fa">
+                            <StackLayout Margin="0,0,0,0" BackgroundColor="Transparent" Orientation="Horizontal" Grid.Row="1" Grid.Column="2">
+                                <Image Source="tipulogo.png" WidthRequest="50" Margin="10,20" VerticalOptions="Start" Grid.Column="1" Grid.Row="1"></Image>
+                            </StackLayout>
+                            <StackLayout BackgroundColor="Transparent" Margin="5,-28,0,0" Padding="0" Orientation="Horizontal" Grid.Row="1" Grid.Column="2">
+
+                            </StackLayout>
+                            <StackLayout  Margin="20"  Orientation="Vertical" BackgroundColor="Transparent" >
+
+                                <Label  Text="Email" FontAttributes="Bold" FontSize="15" TextColor="Black" />
+
+                                <Entry Text="{Binding UserName.Value, Mode=TwoWay}" BackgroundColor="Transparent" TextColor="Black" x:Name="userEmailEntry"  FontSize="Medium" PlaceholderColor="LightBlue" Placeholder="Email" Keyboard="Email" >
+                                    <Entry.Behaviors>
+                                        <behaviors:EventToCommandBehavior EventName="TextChanged" Command="{Binding ValidateUserNameCommand}" />
+                                    </Entry.Behaviors>
+                                    <Entry.Triggers>
+                                        <DataTrigger 
+							    TargetType="Entry"
+							    Binding="{Binding UserName.IsValid}"
+							    Value="False">
+                                            <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                        </DataTrigger>
+                                    </Entry.Triggers>
+                                </Entry>
+                                <Label Margin="{OnPlatform Android='0,-8,0,0', iOS='0,0,0,0'}" BackgroundColor="Transparent"  Text="{Binding UserName.Errors,  Converter={StaticResource ValidationErrorConverter}}" Style="{StaticResource ValidationErrorLabelStyle}" />
+                                <Label  Text="Password" FontAttributes="Bold" FontSize="15" TextColor="Black" />
+
+                                <Entry  BackgroundColor="Transparent" Text="{Binding Password.Value, Mode=TwoWay}" TextColor="Black" x:Name="passwordEntry" FontFamily="{StaticResource AkagiProMedium}" FontSize="Medium" PlaceholderColor="LightBlue" Placeholder="Password" IsPassword="True" >
+                                    <Entry.Behaviors>
+                                        <behaviors:EventToCommandBehavior EventName="TextChanged" Command="{Binding ValidatePasswordCommand}" />
+                                    </Entry.Behaviors>
+                                    <Entry.Triggers>
+                                        <DataTrigger TargetType="Entry" Binding="{Binding Password.IsValid}" Value="False">
+                                            <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                        </DataTrigger>
+                                    </Entry.Triggers>
+                                </Entry>
+                                <Label Margin="{OnPlatform Android='0,-8,0,0', iOS='0,0,0,0'}" BackgroundColor="Transparent" Text="{Binding Password.Errors,  Converter={StaticResource ValidationErrorConverter}}" Style="{StaticResource ValidationErrorLabelStyle}" />
+
+
+                            </StackLayout>
+                            <StackLayout Margin="-25, -30,10,0" Orientation="Horizontal" HorizontalOptions="Start">
+
+                                <Button x:Name="btnPasswordReset"  WidthRequest="200" 
+                                     HeightRequest="40" FontSize="11" TextColor="Black" IsVisible="{Binding IsButtonVisible}" Command="{Binding PasswordResetClicked}" 
+                                        BorderColor="Transparent" BorderWidth="1" BackgroundColor="Transparent"
+                                        Text="Forget Your Password?"  Margin="0,0,0,0" />
+
+                            </StackLayout>
+
+                            <StackLayout Margin="20,-35,20,0" Orientation="Horizontal" HorizontalOptions="End">
+                                <ImageButton x:Name="btnContinue" Source="tologinbtn.png" IsVisible="{Binding IsButtonVisible}" Command="{Binding UserLoginClicked}" 
+                                                 HorizontalOptions="End" WidthRequest="200"
+                                                 CornerRadius="25" />
+
+
+
+
+
+
+                            </StackLayout>
+                        </StackLayout>
+
+                    </StackLayout>
+                </Frame>
+
+            </StackLayout>
+        </ScrollView>
+
+    </ContentPage.Content>
+</ContentPage>
